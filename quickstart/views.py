@@ -3,7 +3,9 @@ from rest_framework import permissions, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from quickstart.serializers import GroupSerializer, UserSerializer
-
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by("-date_joined")
@@ -16,9 +18,10 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 
 @api_view()
 def hello_world(request):
-    return Response({"message": "Hello, world!"})
+    if request.method == "GET":
+        user = User.objects.all()
+        serailized_user = UserSerializer(user)
+        return Response(serailized_user.data)
