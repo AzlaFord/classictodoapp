@@ -21,7 +21,4 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 @api_view()
 def hello_world(request):
-    if request.method == "GET":
-        user = User.objects.all()
-        serailized_user = UserSerializer(user)
-        return Response(serailized_user.data)
+    return Response("hello")
