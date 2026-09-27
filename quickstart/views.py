@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Tasks
+from rest_framework.decorators import action
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by("-date_joined")
@@ -23,5 +24,10 @@ class GroupViewSet(viewsets.ModelViewSet):
 class TasksViewSet(viewsets.ModelViewSet):
     queryset = Tasks.objects.all().order_by("date")
     serializer_class = TasksSerailizer
-    permission_classes = [permissions.IsAuthenticated]
 
+    def create(self, request, pk=):
+        task = Tasks.objects.create(description=pk)
+        task.save()
+        return Response({"status":"task added ?"})
+
+        
