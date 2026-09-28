@@ -20,14 +20,11 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-
 class TasksViewSet(viewsets.ModelViewSet):
     queryset = Tasks.objects.all().order_by("date")
     serializer_class = TasksSerailizer
 
-    def create(self, request, pk=):
-        task = Tasks.objects.create(description=pk)
-        task.save()
-        return Response({"status":"task added ?"})
+    def perform_create(self, serializer):
+        serializer.save()
 
         
