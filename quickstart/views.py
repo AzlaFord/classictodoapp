@@ -30,7 +30,5 @@ class TasksViewSet(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         serializer.update()
 
-    def perform_destroy(self, serializer):
-        serializer.delete()
-
-        
+    def perform_destroy(self, instance):
+        instance.delete()
